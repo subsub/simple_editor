@@ -27,7 +27,7 @@ class SimpleEditorController extends TextEditingController {
 
   String _formatHTML(String value) {
     var result = value.formatBullets();
-    result = result.formatNewLine();    
+    result = result.formatNewLine();
     return "<p>$result</p>";
   }
 
@@ -44,28 +44,53 @@ extension StringExt on String {
     final String result = replaceAll("\n", "<br/>");
     return result;
   }
-  
+
   String formatBullets() {
-    final RegExp regex = RegExp("(\n-\\s)(.{1,})(\n)", multiLine: true,caseSensitive: false,);
-    final String result = replaceAllMapped(regex, (match) => "<br/><li>${match.group(2)}</li><br/>",);
+    final RegExp regex = RegExp(
+      r"(\n-\s)(.{1,})",
+      multiLine: true,
+      caseSensitive: false,
+    );
+    final String result = replaceAllMapped(
+      regex,
+      (match) => "\n<li>${match.group(2)}</li>",
+    );
     return result;
   }
 
   String sanitizeNewLine() {
-    final RegExp regex = RegExp("(<br\\s*/>)", multiLine: true, caseSensitive: false,);
-    final String result = replaceAllMapped(regex, (match) => "\n",);
+    final RegExp regex = RegExp(
+      r"(<br\\s*/>)",
+      multiLine: true,
+      caseSensitive: false,
+    );
+    final String result = replaceAllMapped(
+      regex,
+      (match) => "\n",
+    );
     return result;
   }
-    
+
   String sanitizeP() {
-    final RegExp regex = RegExp("(<p>)|(</p>)",  multiLine: true, caseSensitive: false,);
+    final RegExp regex = RegExp(
+      r"(<p>)|(</p>)",
+      multiLine: true,
+      caseSensitive: false,
+    );
     final String result = replaceAllMapped(regex, (match) => "");
     return result;
   }
 
   String sanitizeBullets() {
-    final RegExp regex = RegExp("(<li>)(([^<>/]){1,})(</li>)", multiLine: true, caseSensitive: false,);
-    final String result = replaceAllMapped(regex, (match) => "\n-${match.group(2)}",);
+    final RegExp regex = RegExp(
+      r"(<li>)(([^<>/]){1,})(</li>)",
+      multiLine: true,
+      caseSensitive: false,
+    );
+    final String result = replaceAllMapped(
+      regex,
+      (match) => "\n-${match.group(2)}",
+    );
     return result;
   }
 }
