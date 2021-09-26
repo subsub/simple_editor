@@ -37,7 +37,6 @@ class _SimpleEditorState extends State<SimpleEditorWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-          color: Color.fromARGB(255, 100, 100, 100),
           child: TextField(
             expands: true,
             key: Key('simple_editor_text_field'),
